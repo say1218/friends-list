@@ -7,18 +7,22 @@ const Button = styled.button`
 	padding: 0.25em 1em;
 	border: 2px solid palevioletred;
 	border-radius: 3px;
-	display: block;
 	&[disabled] {
 		opacity: 0.5;
 	}
 `;
 
 const DeleteButton = styled(Button)`
-	color: red;
+	border: 0;
+	background: none;
+	padding: 0;
 `;
 
 const FavouriteButton = styled(Button)`
 	color: red;
+	border: 0;
+	background: none;
+	padding: 0;
 `;
 
 export { Button, DeleteButton, FavouriteButton };

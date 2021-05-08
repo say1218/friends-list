@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useReducer } from "react";
 import friendListReducer from "./reducer/friendListReducer";
+import Card from "./styledComponents/Card";
 import { DeleteButton, FavouriteButton } from "./styledComponents/Button";
 import { Trash, SuitHeartFill, SuitHeart } from "@styled-icons/bootstrap";
 
@@ -50,7 +51,31 @@ function App() {
 				<input type='text' onKeyDown={(e) => addFriend(e)} required />
 
 				<ul>
-					{friends.map((f) => (
+					<Card>
+						<div className='card-container'>
+							{friends.map((f) => (
+								<div className='card-item' key={f.id}>
+									<div className='card-item-data'>
+										<div className='card-text'>{f.name}</div>
+										<div className='card-subtext'>is your friend</div>
+									</div>
+									<div>
+										<DeleteButton onClick={() => handleDelete(f)}>
+											<Trash size='20' />
+										</DeleteButton>
+										<FavouriteButton onClick={() => handleFavourite(f)}>
+											{f.isFavourite ? (
+												<SuitHeartFill size='20' />
+											) : (
+												<SuitHeart size='20' />
+											)}
+										</FavouriteButton>
+									</div>
+								</div>
+							))}
+						</div>
+					</Card>
+					{/* {friends.map((f) => (
 						<li key={f.id}>
 							{f.name}
 							<DeleteButton onClick={() => handleDelete(f)}>
@@ -64,7 +89,7 @@ function App() {
 								)}
 							</FavouriteButton>
 						</li>
-					))}
+					))} */}
 				</ul>
 			</div>
 		</div>
