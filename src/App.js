@@ -1,37 +1,59 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useState, useReducer } from "react";
+import friendListReducer from "./util/friendListReducer";
 
 const friendsListData = [
-	{ name: "Dave", favourite: true },
-	{ name: "Alice", favourite: true },
-	{ name: "Sarah", favourite: false },
+	{ id: "1234", name: "Dave", isFavourite: false },
+	{ id: "5678", name: "Alice", isFavourite: true },
+	{ id: "9012", name: "Sarah", isFavourite: false },
 ];
 
 function App() {
-	let [friendsList, setFriendsList] = useState(friendsListData);
+	const [friends, dispatchFriendsAction] = useReducer(
+		friendListReducer,
+		friendsListData
+	);
 
 	const addFriend = (e) => {
 		if (e.key === "Enter") {
-			let updateFriendsList = [
-				...friendsList,
-				{ name: e.target.value, favourite: false },
-			];
-			setFriendsList(updateFriendsList);
+			dispatchFriendsAction({
+				type: "ADD_FRIEND",
+				payload: {
+					id: Date.now(),
+					name: e.target.value,
+					isFavourite: false,
+				},
+			});
 		}
 	};
+
+	function handleFavourite(f) {
+		dispatchFriendsAction({
+			type: "FAVOURITE_FRIEND",
+			payload: { ...f },
+		});
+	}
+
+	function handleDelete(f) {
+		dispatchFriendsAction({
+			type: "DELETE_FRIEND",
+			payload: { ...f },
+		});
+	}
 
 	return (
 		<div className='App'>
 			<div>
-				<input type='text' onKeyDown={addFriend} />
+				<input type='text' onKeyDown={(e) => addFriend(e)} />
 
 				<ul>
-					{friendsList.map((f) => (
+					{friends.map((f) => (
 						<>
-							<li key={f.name}>{f.name}</li>
-							<button>Delete</button>
-							<button>Favourite</button>
+							<li key={f.id}>{f.name}</li>
+							<button onClick={() => handleDelete(f)}>Delete</button>
+							<button onClick={() => handleFavourite(f)}>Favourite</button>
+							{f.isFavourite ? "LOVE" : "NO-LOVE"}
 						</>
 					))}
 				</ul>
