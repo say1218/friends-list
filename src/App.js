@@ -6,17 +6,18 @@ import { FriendContext } from "./context/FriendsContext";
 //import friendListReducer from "./reducer/friendListReducer";
 import Card from "./styledComponents/Card";
 import Input from "./styledComponents/Input";
+import Pills from "./styledComponents/Pills";
 import { DeleteButton, FavouriteButton } from "./styledComponents/Button";
-import { Trash, Star, StarFill } from "@styled-icons/bootstrap";
+import {
+	Trash,
+	Star,
+	StarFill,
+	ArrowUp,
+	Search,
+} from "@styled-icons/bootstrap";
 
 function App() {
-	// const [friends, dispatchFriendsAction] = useReducer(
-	// 	friendListReducer,
-	// 	friendsListData
-	// );
-
 	const { state, dispatch } = useContext(FriendContext);
-
 	const inputText = useRef("test");
 
 	const addFriend = (e) => {
@@ -45,6 +46,23 @@ function App() {
 		});
 	}
 
+	// function handleSearch() {
+	// 	console.log(inputText.current.value);
+	// 	dispatch({
+	// 		type: "FIND_FRIEND",
+	// 		payload: inputText.current.value.toLowerCase(),
+	// 	});
+	// }
+	// onKeyPress={handleSearch}
+
+	function handleSort() {
+		console.log("sorting");
+		dispatch({
+			type: "SORT_FRIEND",
+			payload: "isFavourite",
+		});
+	}
+
 	return (
 		<div className='App'>
 			<div>
@@ -60,6 +78,9 @@ function App() {
 								}}
 								ref={inputText}
 							/>
+							<Pills onClick={handleSort}>Favourites</Pills>
+
+							<Pills>Search Mode</Pills>
 							{state.map((f) => (
 								<div className='card-item' key={f.id}>
 									<div className='card-item-data'>

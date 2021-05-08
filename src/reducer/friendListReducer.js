@@ -15,6 +15,20 @@ const friendListReducer = (state, action) => {
 					return friend;
 				}
 			});
+		case "FIND_FRIEND":
+			if (!action.payload) {
+				return state;
+			} else {
+				return state.filter((friend) =>
+					friend.name.toLowerCase().includes(action.payload)
+				);
+			}
+		case "SORT_FRIEND": {
+			let sortedArray = state.sort(function (a, b) {
+				return b[action.payload] - a[action.payload];
+			});
+			return [...sortedArray];
+		}
 		default:
 			return state;
 	}
