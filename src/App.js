@@ -3,8 +3,9 @@ import "./App.css";
 import { useReducer } from "react";
 import friendListReducer from "./reducer/friendListReducer";
 import Card from "./styledComponents/Card";
+import Input from "./styledComponents/Input";
 import { DeleteButton, FavouriteButton } from "./styledComponents/Button";
-import { Trash, SuitHeartFill, SuitHeart } from "@styled-icons/bootstrap";
+import { Trash, Star, StarFill } from "@styled-icons/bootstrap";
 
 const friendsListData = [
 	{ id: "1234", name: "Dave", isFavourite: false },
@@ -48,11 +49,11 @@ function App() {
 	return (
 		<div className='App'>
 			<div>
-				<input type='text' onKeyDown={(e) => addFriend(e)} required />
-
 				<ul>
 					<Card>
 						<div className='card-container'>
+							<Input type='text' onKeyDown={(e) => addFriend(e)} />
+							{/* <input type='text' onKeyDown={(e) => addFriend(e)} required /> */}
 							{friends.map((f) => (
 								<div className='card-item' key={f.id}>
 									<div className='card-item-data'>
@@ -65,9 +66,9 @@ function App() {
 										</DeleteButton>
 										<FavouriteButton onClick={() => handleFavourite(f)}>
 											{f.isFavourite ? (
-												<SuitHeartFill size='20' />
+												<StarFill size='20' />
 											) : (
-												<SuitHeart size='20' />
+												<Star size='20' />
 											)}
 										</FavouriteButton>
 									</div>
@@ -75,21 +76,6 @@ function App() {
 							))}
 						</div>
 					</Card>
-					{/* {friends.map((f) => (
-						<li key={f.id}>
-							{f.name}
-							<DeleteButton onClick={() => handleDelete(f)}>
-								<Trash size='20' />
-							</DeleteButton>
-							<FavouriteButton onClick={() => handleFavourite(f)}>
-								{f.isFavourite ? (
-									<SuitHeartFill size='20' />
-								) : (
-									<SuitHeart size='20' />
-								)}
-							</FavouriteButton>
-						</li>
-					))} */}
 				</ul>
 			</div>
 		</div>

@@ -19,7 +19,7 @@ const DeleteButton = styled(Button)`
 `;
 
 const FavouriteButton = styled(Button)`
-	color: red;
+	color: #ffd700;
 	border: 0;
 	background: none;
 	padding: 0;
