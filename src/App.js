@@ -1,7 +1,9 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState, useReducer } from "react";
-import friendListReducer from "./util/friendListReducer";
+import { useReducer } from "react";
+import friendListReducer from "./reducer/friendListReducer";
+import { DeleteButton, FavouriteButton } from "./styledComponents/Button";
+import { Trash, SuitHeartFill, SuitHeart } from "@styled-icons/bootstrap";
 
 const friendsListData = [
 	{ id: "1234", name: "Dave", isFavourite: false },
@@ -45,16 +47,23 @@ function App() {
 	return (
 		<div className='App'>
 			<div>
-				<input type='text' onKeyDown={(e) => addFriend(e)} />
+				<input type='text' onKeyDown={(e) => addFriend(e)} required />
 
 				<ul>
 					{friends.map((f) => (
-						<>
-							<li key={f.id}>{f.name}</li>
-							<button onClick={() => handleDelete(f)}>Delete</button>
-							<button onClick={() => handleFavourite(f)}>Favourite</button>
-							{f.isFavourite ? "LOVE" : "NO-LOVE"}
-						</>
+						<li key={f.id}>
+							{f.name}
+							<DeleteButton onClick={() => handleDelete(f)}>
+								<Trash size='20' />
+							</DeleteButton>
+							<FavouriteButton onClick={() => handleFavourite(f)}>
+								{f.isFavourite ? (
+									<SuitHeartFill size='20' />
+								) : (
+									<SuitHeart size='20' />
+								)}
+							</FavouriteButton>
+						</li>
 					))}
 				</ul>
 			</div>
