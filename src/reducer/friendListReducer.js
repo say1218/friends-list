@@ -1,7 +1,9 @@
 const friendListReducer = (state, action) => {
 	switch (action.type) {
 		case "ADD_FRIEND":
-			return [...state, action.payload];
+			console.log("in reducer adding");
+			let newState = [...state, action.payload];
+			return newState;
 		case "DELETE_FRIEND":
 			const deletedFriend = action.payload;
 			return state.filter((friend) => friend.id !== deletedFriend.id);
