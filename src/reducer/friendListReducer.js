@@ -41,7 +41,7 @@ const friendListReducer = (state, action) => {
 				newState = state.friendsState.filter((friend) =>
 					friend.name.toLowerCase().includes(action.payload)
 				);
-				console.log("new state -->", newState);
+				console.log("new state in reducer -->", newState);
 			}
 			return {
 				friendsState: [...state.friendsState],
@@ -53,6 +53,7 @@ const friendListReducer = (state, action) => {
 			let sortedArray = state.friendsState.sort(function (a, b) {
 				return b[action.payload] - a[action.payload];
 			});
+			console.log("new state in sort -->", sortedArray);
 			return {
 				friendsState: [...sortedArray],
 				friendsDisplayed: [...sortedArray],

@@ -7,9 +7,11 @@ const usePagination = (initialState) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [paginatedData, setPaginatedData] = useState([]);
 
-	const setData = () => {
-		setPaginatedData((paginatedData) =>
-			[...data].slice((currentPage - 1) * perPage, currentPage * perPage)
+	const setData = (n) => {
+		let current = n ? n : currentPage;
+		setCurrentPage(current);
+		setPaginatedData(() =>
+			[...data].slice((current - 1) * perPage, current * perPage)
 		);
 	};
 
