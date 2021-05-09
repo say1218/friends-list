@@ -9,7 +9,7 @@ import Pills from "./styledComponents/Pills";
 
 function App() {
 	const { state, dispatch } = useContext(FriendContext);
-	const inputText = useRef("test");
+	const inputText = useRef("");
 
 	const addFriend = (e) => {
 		if (!inputText.current.value) {
