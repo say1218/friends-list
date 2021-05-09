@@ -22,6 +22,7 @@ const CardContent = () => {
 	const inputText = useRef("");
 	const isSearching = useRef(false);
 	const isSorting = useRef(false);
+	let showMessage = useRef(state ? state.friendsDisplayed.length : 0);
 
 	let {
 		paginatedData,
@@ -32,7 +33,7 @@ const CardContent = () => {
 		pages,
 	} = usePagination({
 		itemsPerPage: 4,
-		data: [...state.friendsDisplayed],
+		data: state ? [...state.friendsDisplayed] : [],
 	});
 
 	/* eslint-disable react-hooks/exhaustive-deps */
@@ -42,6 +43,7 @@ const CardContent = () => {
 		} else {
 			setData();
 		}
+		showMessage.current = state ? state.friendsDisplayed.length : 0;
 	}, [state]);
 
 	const addFriend = (e) => {
@@ -109,6 +111,7 @@ const CardContent = () => {
 		if (paginatedData.length - 1 === 0) {
 			goToPrevPage(e);
 		}
+		inputText.current.value = "";
 	};
 
 	const toggleOpen = () => {
@@ -195,7 +198,7 @@ const CardContent = () => {
 					</Button>
 				</div>
 			)}
-			{!state.friendsDisplayed.length && (
+			{!showMessage.current && (
 				<p style={{ fontSize: "1rem", fontWeight: "bold" }}>
 					You have no friends with this name. Click Enter to Add !
 				</p>
