@@ -13,6 +13,8 @@ const friendsListData = [
 	{ id: "0934", name: "David", isFavourite: false },
 	{ id: "5928", name: "April", isFavourite: true },
 	{ id: "9412", name: "Glenn", isFavourite: false },
+	{ id: "9410", name: "June", isFavourite: true },
+	{ id: "9665", name: "Jennifer", isFavourite: false },
 ];
 
 const stateObj = {
