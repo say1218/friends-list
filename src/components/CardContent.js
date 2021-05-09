@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 
 import { FriendContext } from "../context/FriendsContext";
-import { DeleteButton, FavouriteButton } from "../styledComponents/Button";
+import { Button, ButtonNoBorder } from "../styledComponents/Button";
 import { Trash, Star, StarFill } from "@styled-icons/bootstrap";
 
 import usePagination from "../hooks/usePagination";
@@ -50,25 +50,30 @@ const CardContent = () => {
 							<div className='card-subtext'>is your friend</div>
 						</div>
 						<div>
-							<DeleteButton onClick={() => handleDelete(f)}>
+							<ButtonNoBorder onClick={() => handleDelete(f)}>
 								<Trash size='20' />
-							</DeleteButton>
-							<FavouriteButton
+							</ButtonNoBorder>
+							<ButtonNoBorder
+								color=' #ffd700'
 								onClick={(e) => {
 									e.preventDefault();
 									handleFavourite(f);
 								}}>
 								{f.isFavourite ? <StarFill size='20' /> : <Star size='20' />}
-							</FavouriteButton>
+							</ButtonNoBorder>
 						</div>
 					</div>
 				))}
-			<button onClick={goToPrevPage} disabled={currentPage === 1}>
-				Previous
-			</button>
-			<button onClick={goToNextPage} disabled={currentPage === pages}>
-				Next
-			</button>
+			{paginatedData.length > 0 && (
+				<div>
+					<Button onClick={goToPrevPage} disabled={currentPage === 1}>
+						Previous
+					</Button>
+					<Button onClick={goToNextPage} disabled={currentPage === pages}>
+						Next
+					</Button>
+				</div>
+			)}
 		</>
 	);
 };
