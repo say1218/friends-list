@@ -48,29 +48,32 @@ function App() {
 	}
 
 	return (
-		<Card>
-			<div className='card-container'>
-				<Input
-					type='text'
-					placeholder="Enter your friend's name"
-					onKeyDown={(event) => {
-						if (event.key === "Enter") {
-							addFriend(event);
-						}
-					}}
-					onKeyPress={handleSearch}
-					onKeyUp={handleSearch}
-					ref={inputText}
-				/>
-				<Pills onClick={handleSort}>Favourites</Pills>
-				<CardContent />
-				{!state.friendsDisplayed.length && (
-					<p style={{ fontSize: "1rem", fontWeight: "bold" }}>
-						You have no friends with this name. Click Enter to Add !
-					</p>
-				)}
-			</div>
-		</Card>
+		<div className='App'>
+			<Card>
+				<div className='card-container'>
+					<div className='card-header'>Friends' List</div>
+					<Input
+						type='text'
+						placeholder="Enter your friend's name"
+						onKeyDown={(event) => {
+							if (event.key === "Enter") {
+								addFriend(event);
+							}
+						}}
+						onKeyPress={handleSearch}
+						onKeyUp={handleSearch}
+						ref={inputText}
+					/>
+					<Pills onClick={handleSort}>Favourites</Pills>
+					<CardContent />
+					{!state.friendsDisplayed.length && (
+						<p style={{ fontSize: "1rem", fontWeight: "bold" }}>
+							You have no friends with this name. Click Enter to Add !
+						</p>
+					)}
+				</div>
+			</Card>
+		</div>
 	);
 }
 

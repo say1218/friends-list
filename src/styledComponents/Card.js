@@ -11,6 +11,11 @@ const Card = styled.div`
 		padding: 2rem;
 		box-shadow: 4px 4px 16px #e1e1e1;
 
+		.card-header {
+			font-weight: bold;
+			font-size: 1.5rem;
+		}
+
 		.card-item {
 			display: flex;
 			width: 360px;
