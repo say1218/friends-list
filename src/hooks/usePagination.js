@@ -28,7 +28,6 @@ const usePagination = (initialState) => {
 
 	const goToNextPage = (e) => {
 		e.preventDefault();
-		console.log("go to next page");
 		setCurrentPage(currentPage < pages ? currentPage + 1 : currentPage);
 		if (currentPage !== pages) {
 			setPaginatedData(

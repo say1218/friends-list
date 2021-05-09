@@ -5,7 +5,6 @@ import { FriendContext } from "./context/FriendsContext";
 import CardContent from "./components/CardContent";
 import Card from "./styledComponents/Card";
 import Input from "./styledComponents/Input";
-import Pills from "./styledComponents/Pills";
 
 function App() {
 	const { state, dispatch } = useContext(FriendContext);
@@ -29,7 +28,7 @@ function App() {
 		inputText.current.value = "";
 	};
 
-	function handleSearch() {
+	const handleSearch = () => {
 		console.log(inputText.current.value);
 		dispatch({
 			type: "FIND_FRIEND",
@@ -37,15 +36,7 @@ function App() {
 				? inputText.current.value.toLowerCase()
 				: "",
 		});
-	}
-
-	function handleSort() {
-		console.log("sorting");
-		dispatch({
-			type: "SORT_FRIEND",
-			payload: "isFavourite",
-		});
-	}
+	};
 
 	return (
 		<div className='App'>
@@ -64,7 +55,7 @@ function App() {
 						onKeyUp={handleSearch}
 						ref={inputText}
 					/>
-					<Pills onClick={handleSort}>Favourites</Pills>
+
 					<CardContent />
 					{!state.friendsDisplayed.length && (
 						<p style={{ fontSize: "1rem", fontWeight: "bold" }}>

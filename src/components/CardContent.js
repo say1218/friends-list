@@ -4,6 +4,7 @@ import usePagination from "../hooks/usePagination";
 import { FriendContext } from "../context/FriendsContext";
 import Modal from "../components/Modal";
 import { Button, ButtonNoBorder } from "../styledComponents/Button";
+import Pills from "../styledComponents/Pills";
 
 import {
 	Trash,
@@ -17,32 +18,6 @@ const CardContent = () => {
 	const { state, dispatch } = useContext(FriendContext);
 	const [isOpen, setIsOpen] = useState(false);
 	const friendSelected = useRef({});
-
-	function handleFavourite(f) {
-		dispatch({
-			type: "FAVOURITE_FRIEND",
-			payload: { ...f },
-		});
-	}
-
-	function handleDelete(f) {
-		friendSelected.current = { ...f };
-		toggleOpen();
-	}
-
-	function confirmDelete() {
-		console.log("to be deleted", friendSelected.current);
-		dispatch({
-			type: "DELETE_FRIEND",
-			payload: { ...friendSelected.current },
-		});
-		friendSelected.current = {};
-		setIsOpen(!isOpen);
-	}
-
-	function toggleOpen() {
-		setIsOpen(!isOpen);
-	}
 
 	let {
 		paginatedData,
@@ -61,8 +36,44 @@ const CardContent = () => {
 		setData();
 	}, [state.friendsDisplayed]);
 
+	const handleFavourite = (f) => {
+		dispatch({
+			type: "FAVOURITE_FRIEND",
+			payload: { ...f },
+		});
+	};
+
+	const handleDelete = (f) => {
+		friendSelected.current = { ...f };
+		toggleOpen();
+	};
+
+	const handleSort = () => {
+		dispatch({
+			type: "SORT_FRIEND",
+			payload: "isFavourite",
+		});
+	};
+
+	const confirmDelete = (e) => {
+		dispatch({
+			type: "DELETE_FRIEND",
+			payload: { ...friendSelected.current },
+		});
+		friendSelected.current = {};
+		setIsOpen(!isOpen);
+		if (paginatedData.length - 1 === 0) {
+			goToPrevPage(e);
+		}
+	};
+
+	const toggleOpen = () => {
+		setIsOpen(!isOpen);
+	};
+
 	return (
 		<>
+			<Pills onClick={handleSort}>Favourites</Pills>
 			{paginatedData.length > 0 &&
 				paginatedData.map((f) => (
 					<div className='card-item' key={f.id}>
@@ -101,8 +112,8 @@ const CardContent = () => {
 								<Button
 									background='#8bc34a'
 									color='#ffffff'
-									onClick={() => {
-										confirmDelete();
+									onClick={(e) => {
+										confirmDelete(e);
 									}}>
 									Yes
 								</Button>

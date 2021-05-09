@@ -18,7 +18,7 @@ const ModalComponent = ({ open, children, onClose }) => {
 				</Modal>
 			</Overlay>
 		</>,
-		document.body
+		document.getElementById("portal")
 	);
 };
 
