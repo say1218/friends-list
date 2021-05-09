@@ -1,5 +1,5 @@
 import "./App.css";
-import { useRef, useContext, useState } from "react";
+import { useRef, useContext } from "react";
 import { FriendContext } from "./context/FriendsContext";
 
 import CardContent from "./components/CardContent";
