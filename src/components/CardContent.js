@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 
 import { FriendContext } from "../context/FriendsContext";
 import { DeleteButton, FavouriteButton } from "../styledComponents/Button";
@@ -14,7 +14,6 @@ const CardContent = () => {
 			type: "FAVOURITE_FRIEND",
 			payload: { ...f },
 		});
-		setData();
 	}
 
 	function handleDelete(f) {
@@ -36,9 +35,10 @@ const CardContent = () => {
 		data: [...state.friendsDisplayed],
 	});
 
+	/* eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
 		setData();
-	});
+	}, [state.friendsDisplayed]);
 
 	return (
 		<>
