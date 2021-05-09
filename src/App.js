@@ -1,5 +1,5 @@
 import "./App.css";
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import { FriendContext } from "./context/FriendsContext";
 
 import CardContent from "./components/CardContent";
@@ -65,7 +65,9 @@ function App() {
 				<Pills onClick={handleSort}>Favourites</Pills>
 				<CardContent />
 				{!state.friendsDisplayed.length && (
-					<p>You have no friends with this name Click Enter to Add</p>
+					<p style={{ fontSize: "1rem", fontWeight: "bold" }}>
+						You have no friends with this name. Click Enter to Add !
+					</p>
 				)}
 			</div>
 		</Card>

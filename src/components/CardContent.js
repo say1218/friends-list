@@ -1,13 +1,22 @@
-import { useContext, useEffect } from "react";
-
-import { FriendContext } from "../context/FriendsContext";
-import { Button, ButtonNoBorder } from "../styledComponents/Button";
-import { Trash, Star, StarFill } from "@styled-icons/bootstrap";
+import { useContext, useEffect, useState, useRef } from "react";
 
 import usePagination from "../hooks/usePagination";
+import { FriendContext } from "../context/FriendsContext";
+import Modal from "../components/Modal";
+import { Button, ButtonNoBorder } from "../styledComponents/Button";
+
+import {
+	Trash,
+	Star,
+	StarFill,
+	ArrowRightCircle,
+	ArrowLeftCircle,
+} from "@styled-icons/bootstrap";
 
 const CardContent = () => {
 	const { state, dispatch } = useContext(FriendContext);
+	const [isOpen, setIsOpen] = useState(false);
+	const friendSelected = useRef({});
 
 	function handleFavourite(f) {
 		dispatch({
@@ -17,10 +26,22 @@ const CardContent = () => {
 	}
 
 	function handleDelete(f) {
+		friendSelected.current = { ...f };
+		toggleOpen();
+	}
+
+	function confirmDelete() {
+		console.log("to be deleted", friendSelected.current);
 		dispatch({
 			type: "DELETE_FRIEND",
-			payload: { ...f },
+			payload: { ...friendSelected.current },
 		});
+		friendSelected.current = {};
+		setIsOpen(!isOpen);
+	}
+
+	function toggleOpen() {
+		setIsOpen(!isOpen);
 	}
 
 	let {
@@ -31,7 +52,7 @@ const CardContent = () => {
 		currentPage,
 		pages,
 	} = usePagination({
-		itemsPerPage: 3,
+		itemsPerPage: 4,
 		data: [...state.friendsDisplayed],
 	});
 
@@ -50,7 +71,11 @@ const CardContent = () => {
 							<div className='card-subtext'>is your friend</div>
 						</div>
 						<div>
-							<ButtonNoBorder onClick={() => handleDelete(f)}>
+							<ButtonNoBorder
+								onClick={(e) => {
+									e.preventDefault();
+									handleDelete(f);
+								}}>
 								<Trash size='20' />
 							</ButtonNoBorder>
 							<ButtonNoBorder
@@ -62,15 +87,42 @@ const CardContent = () => {
 								{f.isFavourite ? <StarFill size='20' /> : <Star size='20' />}
 							</ButtonNoBorder>
 						</div>
+						<Modal open={isOpen} onClose={toggleOpen}>
+							<h1>
+								Are you sure you want to delete {friendSelected.current.name}?
+							</h1>
+							<div>
+								<Button
+									onClick={toggleOpen}
+									background='#e62c1e'
+									color='#ffffff'>
+									Cancel
+								</Button>
+								<Button
+									background='#8bc34a'
+									color='#ffffff'
+									onClick={() => {
+										confirmDelete();
+									}}>
+									Yes
+								</Button>
+							</div>
+						</Modal>
 					</div>
 				))}
 			{paginatedData.length > 0 && (
-				<div>
-					<Button onClick={goToPrevPage} disabled={currentPage === 1}>
-						Previous
+				<div style={{ textAlign: "center" }}>
+					<Button
+						onClick={goToPrevPage}
+						disabled={currentPage === 1}
+						color='black'>
+						<ArrowLeftCircle size='30' />
 					</Button>
-					<Button onClick={goToNextPage} disabled={currentPage === pages}>
-						Next
+					<Button
+						onClick={goToNextPage}
+						disabled={currentPage === pages}
+						color='black'>
+						<ArrowRightCircle size='30' />
 					</Button>
 				</div>
 			)}
